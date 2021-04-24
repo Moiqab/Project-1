@@ -20,6 +20,11 @@ function showsuccsess(input){
     const formControl=input.parentElement;
     formControl.className='form-control success';
 }
+function isvalidemail(Email)
+{
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 form.addEventListener('submit', function(e) {
     e.preventDefault();
     if(username.value === '') {
@@ -38,6 +43,10 @@ form.addEventListener('submit', function(e) {
     }
     if(Email.value === '') {
         showError(Email, 'Email is required');
+    }
+    else if(!isvalidemail(Email.value))
+    {
+        showError(Email,'please provide valid email');
     }
     else 
     {
