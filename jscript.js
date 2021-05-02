@@ -20,57 +20,53 @@ function showsuccsess(input){
     const formControl=input.parentElement;
     formControl.className='form-control success';
 }
-function isvalidemail(Email)
+function isvalidemail(input)
 {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+     if(re.test(input.value.trim())){
+        showsuccsess(input);
+     }
+    else
+    {
+        showError(input, `${getfieldid(input)} is not valid` );
+    }
+     
 }
+function checkreq(inputarray){
+   inputarray.forEach(function(input) {
+       if(input.value===''){
+           showError(input, `${getfieldid(input)} is required`);
+       }
+       else{
+           showsuccsess(input);
+       }
+       
+   });
+}
+//function to get the id of the input field
+function getfieldid(input){
+    return input.id;
+}
+function checklength(input, min,max)
+{
+    if(input.value.length < min)
+    {
+        showError(input,`${getfieldid(input)} less than 3 characters`);
+    }
+    else if(input.value.length >max){
+        showError(input,`${getfieldid(input)} is greator than 10 characters`);
+    }
+    else
+    {
+
+        showsuccsess(input);
+    }
+}
+
 form.addEventListener('submit', function(e) {
     e.preventDefault();
-    if(username.value === '') {
-        showError(username, 'Username is required');
-    }
-    else 
-    {
-        showsuccsess(username);
-    }
-    if(cnic.value === '') {
-        showError(cnic, 'Cnic is required');
-    }
-    else 
-    {
-        showsuccsess(cnic);
-    }
-    if(Email.value === '') {
-        showError(Email, 'Email is required');
-    }
-    else if(!isvalidemail(Email.value))
-    {
-        showError(Email,'please provide valid email');
-    }
-    else 
-    {
-        showsuccsess(Email);
-    }
-    if(dob.value === '') {
-        showError(dob, 'Date of birth is required');
-    }
-    else 
-    {
-        showsuccsess(dob);
-    }
-    if(password.value === '') {
-        showError(password, 'password is required');
-    }
-    else 
-    {
-        showsuccsess(password);
-    }
-    if(password1.value === '') {
-        showError(password1, 'confirm password is required');
-    }
-    else 
-    {
-        showsuccsess(password1);
-    }
+    checkreq([username,cnic,Dob,Email,pass,pass1]);
+    checklength(username,3,6);
+    checklength(password,6,10);
+    isvalidemail(Email);
     });
